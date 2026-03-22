@@ -1,25 +1,28 @@
 # ai-media-generator
 
-`ai-media-generator` 是 `ai-media` CLI 的独立发布仓库。
+`ai-media-generator` is the release repository for the `ai-media` CLI.
 
-这是一个可直接对外开源的 CLI 项目，仓库级许可证使用 `MIT`。
+This repository is intended to be open-source friendly and is licensed under `MIT`.
 
-它统一承载：
+It contains:
 
-- Rust CLI 源码
+- Rust CLI source code
 - npm thin wrapper
 - PyPI thin wrapper
-- GitHub Releases 构建与发布脚本
+- GitHub Releases build and publish scripts
 
-默认接入的平台是：
+The default hosted platform is:
 
 - <a href="https://ricebowl.ai">ricebowl.ai</a>
 
 ## Install As A Skill
 
-这个仓库里的 skill 现在以 `ricebowl.ai` 为默认平台，分成“泛 CLI 入口”和“搜索意图入口”两层。
+This repository now uses `ricebowl.ai` as the default platform and exposes two layers of skills:
 
-推荐优先安装这些搜索型 skill：
+- a general CLI onboarding skill
+- search-intent skills for image, video, workflows, and model-specific entry points
+
+Recommended search-intent skills:
 
 ```bash
 npx skills add https://github.com/214140846/ai-media-generator --skill ai-image-generation
@@ -34,13 +37,13 @@ npx skills add https://github.com/214140846/ai-media-generator --skill veo-video
 npx skills add https://github.com/214140846/ai-media-generator --skill seedance-video-generator
 ```
 
-如果你要的是通用 CLI onboarding，再装：
+If you want the general CLI onboarding skill instead:
 
 ```bash
 npx skills add https://github.com/214140846/ai-media-generator --skill ai-media-cli
 ```
 
-也可以直接装各自的 skill 子目录：
+You can also install each skill directly from its subdirectory:
 
 ```bash
 npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli
@@ -56,9 +59,9 @@ npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/
 npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/seedance-video-generator
 ```
 
-`sora2-video-generator` 作为旧搜索词入口保留，但不是默认推荐入口。
+`sora2-video-generator` is kept only as a legacy search-intent entry point and is no longer part of the default recommendation set.
 
-GitHub README 里的 `skills.sh` Markdown 卡片：
+`skills.sh` cards:
 
 [![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-media-cli/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli)
 [![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-image-generation/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-image-generation)
@@ -72,7 +75,7 @@ GitHub README 里的 `skills.sh` Markdown 卡片：
 [![skills.sh card](https://skills.sh/214140846/ai-media-generator/veo-video-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/veo-video-generator)
 [![skills.sh card](https://skills.sh/214140846/ai-media-generator/seedance-video-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/seedance-video-generator)
 
-对外安装身份：
+Published package identities:
 
 - crate: `ai-media-generator`
 - npm: `ai-media-generator`
@@ -81,14 +84,14 @@ GitHub README 里的 `skills.sh` Markdown 卡片：
 
 ## What It Can Do
 
-`ai-media` 面向 agent 和自动化脚本，当前提供这些能力：
+`ai-media` is designed for agents and automation scripts. It currently supports:
 
-- 配置 API key
-- 查询当前服务支持的视频 / 图片模型
-- 发起图片生成任务
-- 发起视频生成任务
-- 轮询图片 / 视频任务直到完成
-- 输出适合脚本消费的 JSON 结果
+- storing an API key
+- listing available image and video models
+- creating image generation tasks
+- creating video generation tasks
+- polling async tasks until completion
+- returning JSON that is easy to pipe into scripts
 
 ## Install
 
@@ -108,7 +111,7 @@ uv tool install ai-media-generator
 
 ## Quick Start
 
-如果你第一次接入 `ricebowl.ai`，建议先走这条 onboarding：
+If this is your first time using `ricebowl.ai`, use this onboarding flow:
 
 ```text
 sign in
@@ -145,7 +148,7 @@ ai-media video generate \
   --wait
 ```
 
-也可以用环境变量覆盖本地配置：
+You can also override local config with environment variables:
 
 ```bash
 export AI_MEDIA_API_KEY=gm_xxx
@@ -153,11 +156,11 @@ export AI_MEDIA_API_KEY=gm_xxx
 
 ## Ricebowl Onboarding
 
-1. 去 <a href="https://ricebowl.ai/pricing">pricing</a> 充值或订阅
-2. 登录后进入 `Profile`
-3. 打开 `API Keys`
-4. 点击 `Create API Key`
-5. 立刻复制明文 key，然后执行 `ai-media config set-key gm_xxx`
+1. Open <a href="https://ricebowl.ai/pricing">ricebowl.ai/pricing</a> and buy credits or a subscription.
+2. Sign in and go to `Profile`.
+3. Open `API Keys`.
+4. Click `Create API Key`.
+5. Copy the plaintext key immediately, then run `ai-media config set-key gm_xxx`.
 
 ## Docs
 

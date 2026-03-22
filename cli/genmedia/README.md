@@ -1,19 +1,19 @@
 # ai-media CLI Manual
 
-`ai-media` 是一个面向 agent 工作流的 AI generation CLI。
+`ai-media` is an AI generation CLI for agent workflows.
 
-它直接调用后端 HTTP API，帮你完成：
+It talks directly to the backend HTTP API and helps with:
 
-- 配置 API key 和服务地址
-- 查询可用图片 / 视频模型
-- 发起图片生成任务
-- 发起视频生成任务
-- 轮询异步任务直到完成
-- 输出适合脚本二次处理的 JSON
+- storing an API key and service address
+- listing available image and video models
+- creating image generation tasks
+- creating video generation tasks
+- polling async tasks until completion
+- returning JSON that is easy to pipe into scripts
 
-源码仓库：`https://github.com/214140846/ai-media-generator`
+Source repository: `https://github.com/214140846/ai-media-generator`
 
-已接入的平台：
+Supported hosted platforms:
 
 - <a href="https://ricebowl.ai">ricebowl.ai</a>
 - <a href="https://sora2.cloud">sora2.cloud</a>
@@ -34,7 +34,7 @@ pipx install ai-media-generator
 uv tool install ai-media-generator
 ```
 
-安装包名是 `ai-media-generator`，真正执行的命令名是：
+The installable package name is `ai-media-generator`, but the actual command name is:
 
 ```bash
 ai-media
@@ -42,12 +42,12 @@ ai-media
 
 ## Configuration
 
-CLI 需要两个核心配置：
+The CLI uses two core configuration values:
 
-- `base_url`: 你的 API 服务地址
-- `api_key`: 受管 API key，例如 `gm_xxx`
+- `base_url`: your API service address
+- `api_key`: a managed API key such as `gm_xxx`
 
-如果你是第一次接 hosted platform，推荐顺序：
+Recommended first-run order for a hosted platform:
 
 ```text
 recharge credits
@@ -66,24 +66,24 @@ ai-media config set-key gm_xxx
 ai-media config show
 ```
 
-`sora2.cloud` 用法相同，只是把 `base_url` 换成：
+`sora2.cloud` works the same way, but with a different `base_url`:
 
 ```bash
 ai-media config set-base-url https://sora2.cloud
 ```
 
-CLI 会把配置写到系统配置目录下的 `ai-media/config.json`。
+The CLI writes config to `ai-media/config.json` inside the system config directory.
 
 ### Override With Environment Variables
 
-环境变量优先级高于本地配置文件：
+Environment variables take precedence over the local config file:
 
 ```bash
 export AI_MEDIA_BASE_URL=https://ricebowl.ai
 export AI_MEDIA_API_KEY=gm_xxx
 ```
 
-如果没有显式配置 `base_url`，默认值是：
+If `base_url` is not set explicitly, the default is:
 
 ```bash
 http://127.0.0.1:3000
@@ -93,19 +93,19 @@ http://127.0.0.1:3000
 
 ### ricebowl.ai
 
-充值：
+Recharge:
 
-- 打开 <a href="https://ricebowl.ai/pricing">ricebowl.ai/pricing</a>
-- 选择计划或 credits 档位并完成支付
+- Open <a href="https://ricebowl.ai/pricing">ricebowl.ai/pricing</a>
+- Choose a plan or credit package and complete payment
 
-生成 key：
+Create an API key:
 
-- 登录后进入 `Profile`
-- 切到 `API Keys`
-- 点击 `Create API Key`
-- 立即复制明文 `gm_xxx`
+- Sign in and go to `Profile`
+- Open `API Keys`
+- Click `Create API Key`
+- Copy the plaintext `gm_xxx` key immediately
 
-配置 CLI：
+Configure the CLI:
 
 ```bash
 ai-media config set-base-url https://ricebowl.ai
@@ -116,19 +116,19 @@ ai-media models list --json
 
 ### sora2.cloud
 
-充值：
+Recharge:
 
-- 打开 <a href="https://sora2.cloud/pricing">sora2.cloud/pricing</a>
-- 选择月付、年付或 one-time credits/top-up
+- Open <a href="https://sora2.cloud/pricing">sora2.cloud/pricing</a>
+- Choose monthly, yearly, or one-time credits/top-up
 
-生成 key：
+Create an API key:
 
-- 登录后进入账号区
-- 找 `API Keys`、`Developer` 或 `Integrations`
-- 创建新的 key
-- 立即复制明文 `gm_xxx`
+- Sign in and open the account area
+- Look for `API Keys`, `Developer`, or `Integrations`
+- Create a new key
+- Copy the plaintext `gm_xxx` key immediately
 
-配置 CLI：
+Configure the CLI:
 
 ```bash
 ai-media config set-base-url https://sora2.cloud
@@ -137,10 +137,10 @@ ai-media config show
 ai-media models list --json
 ```
 
-提示：
+Notes:
 
-- `ricebowl.ai` 的 `API Keys` 路由在源码里对应 `Profile -> API Keys`
-- `sora2.cloud` 的 key 入口我没有拿到公开文档页，所以这里写的是保守 onboarding 路径
+- The `ricebowl.ai` source code maps API key creation to `Profile -> API Keys`
+- I did not find a public `sora2.cloud` API key documentation page, so this section uses a conservative onboarding path
 
 ## Command Tree
 
@@ -386,7 +386,7 @@ ai-media config show
 ai-media models list --json
 ```
 
-或者：
+Or:
 
 ```bash
 ai-media config set-base-url https://sora2.cloud
