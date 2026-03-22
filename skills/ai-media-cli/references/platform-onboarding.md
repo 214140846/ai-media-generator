@@ -3,7 +3,6 @@
 ## Supported Hosted Platforms
 
 - <a href="https://ricebowl.ai">ricebowl.ai</a>
-- <a href="https://sora2.cloud">sora2.cloud</a>
 
 ## First-Time Onboarding
 
@@ -13,7 +12,6 @@ sign in
   -> open account / profile
   -> create API key
   -> copy plaintext key now
-  -> ai-media config set-base-url ...
   -> ai-media config set-key ...
   -> ai-media models list --json
 ```
@@ -51,47 +49,6 @@ sign in
 ### 3. Configure CLI
 
 ```bash
-ai-media config set-base-url https://ricebowl.ai
-ai-media config set-key gm_xxx
-ai-media config show
-ai-media models list --json
-```
-
-## sora2.cloud
-
-### 1. Recharge
-
-- 打开 <a href="https://sora2.cloud/pricing">sora2.cloud/pricing</a>
-- 选择月付、年付或一次性 credits/top-up
-- 完成支付后，在当前安全账户里同步 credits 与历史
-
-### 2. Generate API Key
-
-我没有找到公开可直接访问的 sora2.cloud API key 文档页，所以这里给的是保守 onboarding：
-
-1. 登录 sora2.cloud
-2. 进入账号区或个人资料页
-3. 找到 `API Keys`、`Developer` 或集成设置入口
-4. 创建新的 key
-5. 立即复制明文 key
-
-推断说明：
-
-- sora2.cloud 公网站文案明确提到 credits、history、team 会同步到安全账户
-- 结合 ricebowl.ai 的账号系统实现，可以合理推断它也是“登录后到账号区创建 key”的模式
-
-如果页面找不到 key 入口，优先从：
-
-- 头像菜单
-- Profile / Account
-- Developer / Integrations
-
-这几处继续找。
-
-### 3. Configure CLI
-
-```bash
-ai-media config set-base-url https://sora2.cloud
 ai-media config set-key gm_xxx
 ai-media config show
 ai-media models list --json
@@ -102,16 +59,14 @@ ai-media models list --json
 如果不想把 key 落到本地配置文件，可以直接用环境变量：
 
 ```bash
-export AI_MEDIA_BASE_URL=https://ricebowl.ai
 export AI_MEDIA_API_KEY=gm_xxx
 ```
 
-或者：
+历史兼容说明：
 
-```bash
-export AI_MEDIA_BASE_URL=https://sora2.cloud
-export AI_MEDIA_API_KEY=gm_xxx
-```
+- 旧版脚本里可能还会出现 `AI_MEDIA_BASE_URL`
+- 当前默认用户路径不再需要它
+- 如果旧脚本依赖它，可以先保留，但新文档不再推荐
 
 ## First Working Commands
 

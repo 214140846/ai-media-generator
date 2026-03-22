@@ -1,6 +1,6 @@
 {
   "name": "ai-media-generator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Thin npm wrapper for the ai-media Rust CLI",
   "license": "MIT",
   "homepage": "https://ricebowl.ai",

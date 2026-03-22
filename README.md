@@ -11,28 +11,66 @@
 - PyPI thin wrapper
 - GitHub Releases 构建与发布脚本
 
-目前已经接入这些 hosted platforms：
+默认接入的平台是：
 
 - <a href="https://ricebowl.ai">ricebowl.ai</a>
-- <a href="https://sora2.cloud">sora2.cloud</a>
 
 ## Install As A Skill
 
-这个仓库里的 `ai-media-cli` 也可以直接被 `skills` CLI 识别，已经验证过下面两种装法都能成功列出 skill：
+这个仓库里的 skill 现在以 `ricebowl.ai` 为默认平台，分成“泛 CLI 入口”和“搜索意图入口”两层。
+
+推荐优先安装这些搜索型 skill：
+
+```bash
+npx skills add https://github.com/214140846/ai-media-generator --skill ai-image-generation
+npx skills add https://github.com/214140846/ai-media-generator --skill ai-video-generation
+npx skills add https://github.com/214140846/ai-media-generator --skill text-to-video
+npx skills add https://github.com/214140846/ai-media-generator --skill image-to-video
+npx skills add https://github.com/214140846/ai-media-generator --skill text-to-image
+npx skills add https://github.com/214140846/ai-media-generator --skill image-to-image
+npx skills add https://github.com/214140846/ai-media-generator --skill flux-image-generator
+npx skills add https://github.com/214140846/ai-media-generator --skill nano-banana-image-generator
+npx skills add https://github.com/214140846/ai-media-generator --skill veo-video-generator
+npx skills add https://github.com/214140846/ai-media-generator --skill seedance-video-generator
+```
+
+如果你要的是通用 CLI onboarding，再装：
 
 ```bash
 npx skills add https://github.com/214140846/ai-media-generator --skill ai-media-cli
 ```
 
-或者直接装 skill 子目录：
+也可以直接装各自的 skill 子目录：
 
 ```bash
 npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/ai-image-generation
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/ai-video-generation
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/text-to-video
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/image-to-video
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/text-to-image
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/image-to-image
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/flux-image-generator
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/nano-banana-image-generator
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/veo-video-generator
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/seedance-video-generator
 ```
+
+`sora2-video-generator` 作为旧搜索词入口保留，但不是默认推荐入口。
 
 GitHub README 里的 `skills.sh` Markdown 卡片：
 
 [![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-media-cli/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-image-generation/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-image-generation)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-video-generation/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-video-generation)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/text-to-video/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/text-to-video)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/image-to-video/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/image-to-video)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/text-to-image/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/text-to-image)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/image-to-image/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/image-to-image)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/flux-image-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/flux-image-generator)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/nano-banana-image-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/nano-banana-image-generator)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/veo-video-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/veo-video-generator)
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/seedance-video-generator/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/seedance-video-generator)
 
 对外安装身份：
 
@@ -45,7 +83,7 @@ GitHub README 里的 `skills.sh` Markdown 卡片：
 
 `ai-media` 面向 agent 和自动化脚本，当前提供这些能力：
 
-- 配置 API key 和 base URL
+- 配置 API key
 - 查询当前服务支持的视频 / 图片模型
 - 发起图片生成任务
 - 发起视频生成任务
@@ -70,21 +108,17 @@ uv tool install ai-media-generator
 
 ## Quick Start
 
-如果你第一次接入 hosted platform，建议先走这条 onboarding：
+如果你第一次接入 `ricebowl.ai`，建议先走这条 onboarding：
 
 ```text
 sign in
   -> recharge credits
   -> create API key
-  -> set base_url
   -> set key
   -> models list --json
 ```
 
 ```bash
-# point the CLI at your API server
-ai-media config set-base-url https://ricebowl.ai
-
 # save your managed API key
 ai-media config set-key gm_xxx
 
@@ -114,45 +148,16 @@ ai-media video generate \
 也可以用环境变量覆盖本地配置：
 
 ```bash
-export AI_MEDIA_BASE_URL=https://ricebowl.ai
 export AI_MEDIA_API_KEY=gm_xxx
 ```
 
-如果你对接的是 `sora2.cloud`，只需要把 `base_url` 换成：
-
-```bash
-ai-media config set-base-url https://sora2.cloud
-```
-
-## Hosted Platform Onboarding
-
-### ricebowl.ai
+## Ricebowl Onboarding
 
 1. 去 <a href="https://ricebowl.ai/pricing">pricing</a> 充值或订阅
 2. 登录后进入 `Profile`
 3. 打开 `API Keys`
 4. 点击 `Create API Key`
-5. 立刻复制明文 key，并执行：
-
-```bash
-ai-media config set-base-url https://ricebowl.ai
-ai-media config set-key gm_xxx
-ai-media config show
-```
-
-### sora2.cloud
-
-1. 去 <a href="https://sora2.cloud/pricing">pricing</a> 购买 credits 或订阅
-2. 登录后进入账号区
-3. 找 `API Keys` / `Developer` / `Integrations`
-4. 创建 key 并立即复制
-5. 然后执行：
-
-```bash
-ai-media config set-base-url https://sora2.cloud
-ai-media config set-key gm_xxx
-ai-media config show
-```
+5. 立刻复制明文 key，然后执行 `ai-media config set-key gm_xxx`
 
 ## Docs
 
@@ -160,6 +165,18 @@ ai-media config show
 - npm wrapper notes: [`packages/ai-media/README.md`](packages/ai-media/README.md)
 - PyPI wrapper notes: [`packages/ai-media-py/README.md`](packages/ai-media-py/README.md)
 - Codex skill: [`skills/ai-media-cli/SKILL.md`](skills/ai-media-cli/SKILL.md)
+- Search-intent skill: [`skills/ai-image-generation/SKILL.md`](skills/ai-image-generation/SKILL.md)
+- Search-intent skill: [`skills/ai-video-generation/SKILL.md`](skills/ai-video-generation/SKILL.md)
+- Search-intent skill: [`skills/sora2-video-generator/SKILL.md`](skills/sora2-video-generator/SKILL.md)
+- Search-intent skill: [`skills/text-to-video/SKILL.md`](skills/text-to-video/SKILL.md)
+- Search-intent skill: [`skills/image-to-video/SKILL.md`](skills/image-to-video/SKILL.md)
+- Search-intent skill: [`skills/text-to-image/SKILL.md`](skills/text-to-image/SKILL.md)
+- Search-intent skill: [`skills/image-to-image/SKILL.md`](skills/image-to-image/SKILL.md)
+- Search-intent skill: [`skills/flux-image-generator/SKILL.md`](skills/flux-image-generator/SKILL.md)
+- Search-intent skill: [`skills/nano-banana-image-generator/SKILL.md`](skills/nano-banana-image-generator/SKILL.md)
+- Search-intent skill: [`skills/veo-video-generator/SKILL.md`](skills/veo-video-generator/SKILL.md)
+- Search-intent skill: [`skills/seedance-video-generator/SKILL.md`](skills/seedance-video-generator/SKILL.md)
+- Legacy skill: [`skills/sora2-video-generator/SKILL.md`](skills/sora2-video-generator/SKILL.md)
 
 ## Repository Layout
 
@@ -169,6 +186,18 @@ packages/ai-media      npm wrapper
 packages/ai-media-py   PyPI wrapper
 scripts/cli            release helpers
 skills/ai-media-cli    repo-local onboarding skill
+skills/ai-image-generation
+skills/ai-video-generation
+skills/sora2-video-generator
+skills/text-to-video
+skills/image-to-video
+skills/text-to-image
+skills/image-to-image
+skills/flux-image-generator
+skills/nano-banana-image-generator
+skills/veo-video-generator
+skills/seedance-video-generator
+skills/sora2-video-generator (legacy, hidden from default install path)
 ```
 
 ## Local Development

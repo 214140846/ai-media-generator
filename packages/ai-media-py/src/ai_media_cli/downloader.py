@@ -7,7 +7,7 @@ import urllib.request
 
 from .platforms import build_release_url, resolve_binary_name, resolve_target
 
-VERSION = "0.1.0"
+VERSION = "0.1.1"
 
 
 def resolve_cache_dir() -> pathlib.Path:

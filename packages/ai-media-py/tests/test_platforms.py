@@ -22,8 +22,8 @@ class PlatformTests(unittest.TestCase):
         target = "x86_64-unknown-linux-gnu"
         self.assertEqual(build_asset_name(target), "ai-media-generator-x86_64-unknown-linux-gnu")
         self.assertEqual(
-            build_release_url("0.1.0", target),
-            "https://github.com/214140846/ai-media-generator/releases/download/ai-media-generator-v0.1.0/ai-media-generator-x86_64-unknown-linux-gnu",
+            build_release_url("0.1.1", target),
+            "https://github.com/214140846/ai-media-generator/releases/download/ai-media-generator-v0.1.1/ai-media-generator-x86_64-unknown-linux-gnu",
         )
 
 
