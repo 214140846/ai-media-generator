@@ -38,10 +38,12 @@ ai-media video generate \
   --prompt "<subject moving from the reference image>, <camera movement>, <mood>" \
   --aspect-ratio 16:9 \
   --duration 4 \
+  --param images='["https://example.com/reference.png"]' \
   --wait
 ```
 
 先把参考图准备好，再把同一条 prompt 套进你选中的 image-to-video 模型。
+需要补充模型字段时，继续加 `--param KEY=VALUE`。
 
 ## Core Commands
 

@@ -35,10 +35,12 @@ ai-media image generate \
   --model <FLUX_MODEL> \
   --prompt "<subject>, <style>, <lighting>" \
   --aspect-ratio 1:1 \
+  --param size=1024x1024 \
   --wait
 ```
 
 如果你要海报或横幅，把 `--aspect-ratio` 改成 `16:9`。
+Flux 系列常见的模型字段就是 `size`，其他字段继续用 `--param`。
 
 ## Core Commands
 

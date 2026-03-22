@@ -36,10 +36,12 @@ ai-media video generate \
   --prompt "<scene>, <camera movement>, <mood>" \
   --aspect-ratio 16:9 \
   --duration 2 \
+  --param images='["https://example.com/reference.png"]' \
   --wait
 ```
 
 这个模板先跑最短成片；如果要更长，再增加 `--duration`。
+Seedance 的图生视频参数也走 `--param KEY=VALUE`。
 
 ## Core Commands
 

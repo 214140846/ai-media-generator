@@ -112,7 +112,10 @@ mod tests {
     fn config_path_uses_ai_media_directory() {
         let _guard = env_lock().lock().unwrap_or_else(|error| error.into_inner());
         let path = config_path().expect("config path");
-        assert_eq!(path.file_name().and_then(|value| value.to_str()), Some("config.json"));
+        assert_eq!(
+            path.file_name().and_then(|value| value.to_str()),
+            Some("config.json")
+        );
         assert_eq!(
             path.parent()
                 .and_then(|value| value.file_name())

@@ -20,7 +20,7 @@ ricebowl.ai
   -> recharge credits
   -> create API key
   -> set key
-  -> models list --json
+  -> models show --model <VEO_MODEL>
   -> choose a veo-capable video model
   -> video generate
   -> task get
@@ -31,15 +31,18 @@ ricebowl.ai
 ```bash
 ai-media config set-key <KEY>
 ai-media models list --json
+ai-media models show --model <VEO_MODEL>
 ai-media video generate \
   --model <VEO_MODEL> \
   --prompt "<scene>, <camera movement>, <mood>" \
   --aspect-ratio 16:9 \
   --duration 2 \
+  --param enhance_prompt=true \
   --wait
 ```
 
 如果模型支持更长成片，再把 `--duration` 往上调。
+如果是图生视频，补 `--image https://...`。
 
 ## Core Commands
 
@@ -47,6 +50,7 @@ ai-media video generate \
 ai-media config set-key <KEY>
 ai-media config show
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media video generate --model <MODEL> --prompt <PROMPT>
 ai-media task get --kind video --task-id <TASK_ID>
 ```

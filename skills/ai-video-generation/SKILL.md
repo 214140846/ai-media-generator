@@ -31,7 +31,7 @@ ricebowl.ai
   -> recharge credits
   -> create API key
   -> set key
-  -> models list --json
+  -> models show --model <MODEL>
   -> choose text-to-video or image-to-video
   -> video generate
   -> video get / task get
@@ -42,15 +42,18 @@ ricebowl.ai
 ```bash
 ai-media config set-key <KEY>
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media video generate \
   --model <MODEL> \
   --prompt "<scene>, <camera movement>, <mood>" \
   --aspect-ratio 16:9 \
   --duration 4 \
+  --param enhance_prompt=true \
   --wait
 ```
 
 如果模型偏短片，就把 `--duration` 调成 `2`。
+如果是图生视频模型，就把参考图放进 `--image https://...`。
 
 ## Core Commands
 
@@ -58,6 +61,7 @@ ai-media video generate \
 ai-media config set-key <KEY>
 ai-media config show
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media video generate --model <MODEL> --prompt <PROMPT>
 ai-media video get --task-id <TASK_ID>
 ai-media task get --kind <image|video> --task-id <TASK_ID>
@@ -80,6 +84,7 @@ ai-media task get --kind <image|video> --task-id <TASK_ID>
 如果用户在选模型或做自动化，补充：
 
 - `models list --json`
+- `models show --model`
 - `task get --kind video`
 - `--wait`
 - `--poll-interval`

@@ -29,7 +29,7 @@ ricebowl.ai
   -> recharge credits
   -> create API key
   -> set key
-  -> models list --json
+  -> models show --model <MODEL>
   -> image generate
   -> image get
 ```
@@ -39,14 +39,18 @@ ricebowl.ai
 ```bash
 ai-media config set-key <KEY>
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media image generate \
   --model <MODEL> \
   --prompt "<subject>, <style>, <lighting>" \
   --aspect-ratio 1:1 \
+  --image https://example.com/reference.png \
+  --param vendor_options='{"style":"cinematic"}' \
   --wait
 ```
 
 如果要做横幅图，就把 `--aspect-ratio` 改成 `16:9`。
+如果模型还有额外字段，就先跑 `models show --model <MODEL>`，再用 `--param KEY=VALUE` 传递。
 
 ## Core Commands
 
@@ -54,6 +58,7 @@ ai-media image generate \
 ai-media config set-key <KEY>
 ai-media config show
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media image generate --model <MODEL> --prompt <PROMPT>
 ai-media image get --task-id <TASK_ID>
 ```
@@ -75,5 +80,6 @@ ai-media image get --task-id <TASK_ID>
 如果用户在比模型或调脚本，补充：
 
 - `models list --json`
+- `models show --model`
 - `AI_MEDIA_API_KEY`
 - `image get --task-id`

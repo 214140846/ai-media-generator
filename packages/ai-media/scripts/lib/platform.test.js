@@ -24,7 +24,7 @@ test("buildReleaseUrl uses ai-media release tag and asset naming", () => {
     "ai-media-generator-x86_64-unknown-linux-gnu"
   );
   assert.equal(
-    buildReleaseUrl("0.1.1", "x86_64-unknown-linux-gnu"),
-    "https://github.com/214140846/ai-media-generator/releases/download/ai-media-generator-v0.1.1/ai-media-generator-x86_64-unknown-linux-gnu"
+    buildReleaseUrl("0.1.2", "x86_64-unknown-linux-gnu"),
+    "https://github.com/214140846/ai-media-generator/releases/download/ai-media-generator-v0.1.2/ai-media-generator-x86_64-unknown-linux-gnu"
   );
 });

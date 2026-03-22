@@ -41,6 +41,7 @@ install
 2. 实际命令名是 `ai-media`
 3. 核心配置只有 `api_key`
 4. 环境变量 `AI_MEDIA_API_KEY` 会覆盖本地配置
+5. `--param KEY=VALUE` 是模型专属参数的通用透传入口，JSON 值会自动按原类型解析
 
 ## Core Commands
 
@@ -51,16 +52,19 @@ ai-media config set-key <KEY>
 ai-media config show
 ai-media models list
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media image generate --model <MODEL> --prompt <PROMPT>
 ai-media image get --task-id <TASK_ID>
 ai-media video generate --model <MODEL> --prompt <PROMPT>
 ai-media video get --task-id <TASK_ID>
 ai-media task get --kind <image|video> --task-id <TASK_ID>
+ai-media image generate --model <MODEL> --prompt <PROMPT> --param KEY=VALUE
+ai-media video generate --model <MODEL> --prompt <PROMPT> --param KEY=VALUE
 ```
 
 ## When To Load References
 
-- 参数全表、默认值、输出行为：读 `references/cli-commands.md`
+- 参数全表、默认值、输出行为、模型参数模板：读 `references/cli-commands.md`
 - 充值、生成 key、平台 onboarding：读 `references/platform-onboarding.md`
 
 ## Response Pattern
@@ -76,9 +80,11 @@ ai-media task get --kind <image|video> --task-id <TASK_ID>
 如果用户要自动化或脚本集成，补充：
 
 - `models list --json`
+- `models show --model <MODEL>`
 - `image/video/task get`
 - `--wait`
 - `--poll-interval`
+- `--param KEY=VALUE`
 - 环境变量覆盖方式
 
 ## Friendly Onboarding Snippet

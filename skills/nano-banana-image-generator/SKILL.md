@@ -20,7 +20,7 @@ ricebowl.ai
   -> recharge credits
   -> create API key
   -> set key
-  -> models list --json
+  -> models show --model nano-banana
   -> choose a nano-banana-capable image model
   -> image generate
   -> image get
@@ -31,14 +31,18 @@ ricebowl.ai
 ```bash
 ai-media config set-key <KEY>
 ai-media models list --json
+ai-media models show --model nano-banana
 ai-media image generate \
   --model nano-banana \
   --prompt "<subject>, <style>, <lighting>" \
   --aspect-ratio 1:1 \
+  --image https://example.com/reference.png \
+  --param vendor_options='{"style":"cinematic"}' \
   --wait
 ```
 
 如果是社媒封面，就把 `--aspect-ratio` 改成 `16:9`。
+如果这个模型版本暴露了额外参数，就先跑 `models show --model nano-banana`，再用 `--param KEY=VALUE`。
 
 ## Core Commands
 
@@ -46,6 +50,7 @@ ai-media image generate \
 ai-media config set-key <KEY>
 ai-media config show
 ai-media models list --json
+ai-media models show --model <MODEL>
 ai-media image generate --model <MODEL> --prompt <PROMPT>
 ai-media image get --task-id <TASK_ID>
 ```

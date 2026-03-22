@@ -152,11 +152,12 @@ ai-media
     show
   models
     list [--json]
+    show --model <MODEL> [--json]
   image
-    generate --model --prompt [--aspect-ratio] [--wait] [--poll-interval]
+    generate --model --prompt [--aspect-ratio] [--response-format] [--image]... [--metadata-json] [--param KEY=VALUE] [--wait] [--poll-interval]
     get --task-id [--wait] [--poll-interval]
   video
-    generate --model --prompt [--aspect-ratio] [--duration] [--wait] [--poll-interval]
+    generate --model --prompt [--aspect-ratio] [--duration] [--image]... [--param KEY=VALUE] [--wait] [--poll-interval]
     get --task-id [--wait] [--poll-interval]
   task
     get --kind <image|video> --task-id [--wait] [--poll-interval]
@@ -214,6 +215,17 @@ Machine-readable JSON output for scripts, agents, and pipelines.
 ai-media models list --json
 ```
 
+#### `models show`
+
+Inspect a single model and its parameter metadata.
+
+```bash
+ai-media models show --model veo3.1
+ai-media models show --model veo3.1 --json
+```
+
+The text output includes the model kind plus a parameter summary, so agents can discover which fields to pass with `--param`.
+
 ### `image`
 
 Create or inspect image generation tasks.
@@ -228,6 +240,10 @@ Required parameters:
 Optional parameters:
 
 - `--aspect-ratio <ASPECT_RATIO>`
+- `--response-format <url|b64_json>`
+- `--image <IMAGE_URL>` repeatable
+- `--metadata-json <JSON>`
+- `--param <KEY=VALUE>`
 - `--wait`
 - `--poll-interval <SECONDS>` default `5`
 
@@ -247,6 +263,8 @@ ai-media image generate \
   --model nano-banana \
   --prompt "studio portrait lighting, close-up ramen bowl" \
   --aspect-ratio 1:1 \
+  --image https://example.com/reference.png \
+  --param vendor_options='{"style":"cinematic"}' \
   --wait \
   --poll-interval 3
 ```
@@ -255,6 +273,7 @@ Behavior:
 
 - without `--wait`, prints the initial create-task response
 - with `--wait`, polls until the task becomes `completed` or `failed`
+- `--param` values are merged into the JSON body and JSON-looking values are parsed as JSON first
 
 #### `image get`
 
@@ -286,6 +305,8 @@ Optional parameters:
 
 - `--aspect-ratio <ASPECT_RATIO>`
 - `--duration <SECONDS>`
+- `--image <IMAGE_URL>` repeatable
+- `--param <KEY=VALUE>`
 - `--wait`
 - `--poll-interval <SECONDS>` default `8`
 
@@ -296,17 +317,21 @@ ai-media video generate \
   --model seedance-pro-fast \
   --prompt "steam rising from a rice bowl, cinematic close-up" \
   --aspect-ratio 16:9 \
-  --duration 2
+  --duration 5 \
+  --param resolution=720p \
+  --param seed=42
 ```
 
 Wait for completion:
 
 ```bash
 ai-media video generate \
-  --model seedance-pro-fast \
+  --model veo3-1 \
   --prompt "slow dolly shot over a steaming rice bowl" \
   --aspect-ratio 16:9 \
-  --duration 2 \
+  --duration 4 \
+  --image https://example.com/start-frame.png \
+  --param audio=true \
   --wait
 ```
 
@@ -314,6 +339,7 @@ Behavior:
 
 - without `--wait`, prints the initial create-task response
 - with `--wait`, polls until the task becomes `SUCCESS` or `FAILURE`
+- `--param` values are merged into the JSON body and JSON-looking values are parsed as JSON first
 
 #### `video get`
 
@@ -346,6 +372,55 @@ Parameters:
 ```bash
 ai-media task get --kind image --task-id img_task_xxx
 ai-media task get --kind video --task-id vid_task_xxx --wait
+```
+
+## Model-Specific Parameters
+
+Use the built-in flags for common fields:
+
+- `--aspect-ratio`
+- `--duration`
+
+Start with `ai-media models show --model <MODEL>` to inspect the parameter metadata for the exact model you want to use.
+
+Use `--param KEY=VALUE` for model-specific fields from the upstream API docs. Booleans, numbers, arrays, and objects are parsed as JSON when possible.
+
+Examples:
+
+```bash
+# Veo text-to-video
+ai-media video generate \
+  --model veo3.1 \
+  --prompt "cinematic bowl of ramen under soft light" \
+  --aspect-ratio 16:9 \
+  --param enhance_prompt=true \
+  --param enable_upsample=true
+```
+
+```bash
+# Veo image-to-video
+ai-media video generate \
+  --model veo3.1 \
+  --prompt "steam drifting upward, gentle camera push-in" \
+  --param images='["https://example.com/reference.png"]' \
+  --aspect-ratio 16:9
+```
+
+```bash
+# Flux / Recraft-style image models
+ai-media image generate \
+  --model bfl/flux-2-max \
+  --prompt "minimal product photo of a ceramic bowl" \
+  --param size=1024x1024
+```
+
+```bash
+# Seedance / other reference-image video models
+ai-media video generate \
+  --model doubao-seedance-1-5-pro-251215 \
+  --prompt "slow push-in over the food" \
+  --param images='["https://example.com/reference.png"]' \
+  --duration 4
 ```
 
 ## Output Shape

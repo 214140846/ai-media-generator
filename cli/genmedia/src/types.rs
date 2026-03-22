@@ -3,8 +3,29 @@ use serde_json::Value;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct ModelsResponse {
+    #[serde(rename = "schemaVersion")]
+    pub schema_version: Option<u64>,
+    #[serde(rename = "generatedAt")]
+    pub generated_at: Option<String>,
     pub videos: Vec<VideoModelItem>,
     pub images: Vec<ImageModelItem>,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct ModelParameter {
+    pub key: String,
+    #[serde(rename = "type")]
+    pub parameter_type: String,
+    pub label: String,
+    pub description: Option<String>,
+    pub required: Option<bool>,
+    #[serde(rename = "defaultValue")]
+    pub default_value: Option<Value>,
+    #[serde(rename = "enum")]
+    pub enum_values: Option<Vec<Value>>,
+    pub min: Option<f64>,
+    pub max: Option<f64>,
+    pub repeatable: Option<bool>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -17,6 +38,8 @@ pub struct VideoModelItem {
     pub marks: Vec<String>,
     #[serde(default)]
     pub credits: Vec<Value>,
+    #[serde(default)]
+    pub parameters: Vec<ModelParameter>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -30,6 +53,8 @@ pub struct ImageModelItem {
     pub price_tier: Option<String>,
     #[serde(rename = "creditCost")]
     pub credit_cost: Option<i64>,
+    #[serde(default)]
+    pub parameters: Vec<ModelParameter>,
 }
 
 #[derive(Debug, Deserialize, Serialize)]

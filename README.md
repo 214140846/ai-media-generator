@@ -131,20 +131,24 @@ ai-media config show
 # list available models
 ai-media models list
 ai-media models list --json
+ai-media models show --model veo3-1
 
 # generate one image
 ai-media image generate \
   --model nano-banana \
   --prompt "a cinematic ramen bowl on a wooden table" \
   --aspect-ratio 1:1 \
+  --image https://example.com/reference.png \
+  --param vendor_options='{"style":"cinematic"}' \
   --wait
 
 # generate one video
 ai-media video generate \
-  --model seedance-pro-fast \
+  --model veo3-1 \
   --prompt "steam rising from a rice bowl, cinematic close-up" \
   --aspect-ratio 16:9 \
-  --duration 2 \
+  --duration 4 \
+  --param audio=true \
   --wait
 ```
 

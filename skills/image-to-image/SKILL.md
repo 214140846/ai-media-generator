@@ -37,10 +37,12 @@ ai-media image generate \
   --model <MODEL> \
   --prompt "<edit instruction>, <style>, <lighting>" \
   --aspect-ratio 1:1 \
+  --param size=1024x1024 \
   --wait
 ```
 
 先把参考图准备好，再让 prompt 只描述你要怎么改它。
+如果模型要别的编辑字段，也直接用 `--param KEY=VALUE`。
 
 ## Core Commands
 

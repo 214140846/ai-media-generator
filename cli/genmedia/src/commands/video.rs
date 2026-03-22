@@ -1,27 +1,45 @@
 use anyhow::{Result, bail};
-use serde_json::json;
+use serde_json::{Map, Value};
 use tokio::time::{Duration, sleep};
 
-use crate::{client::ApiClient, config::Config, types::VideoTaskResponse};
+use crate::{
+    client::ApiClient,
+    config::Config,
+    request_params::{merge_object, parse_params, reserved_video_keys},
+    types::VideoTaskResponse,
+};
 
 pub async fn generate(
     model: String,
     prompt: String,
     aspect_ratio: Option<String>,
     duration: Option<u64>,
+    images: Vec<String>,
+    params: Vec<String>,
     wait: bool,
     poll_interval: u64,
 ) -> Result<()> {
     let config = Config::load()?;
     let client = ApiClient::from_config(&config)?;
-    let response = client
-        .create_video(&json!({
-            "model": model,
-            "prompt": prompt,
-            "aspect_ratio": aspect_ratio,
-            "duration": duration
-        }))
-        .await?;
+    let mut body = Map::new();
+    body.insert("model".to_string(), Value::from(model));
+    body.insert("prompt".to_string(), Value::from(prompt));
+    if let Some(aspect_ratio) = aspect_ratio {
+        body.insert("aspect_ratio".to_string(), Value::from(aspect_ratio));
+    }
+    if let Some(duration) = duration {
+        body.insert("duration".to_string(), Value::from(duration));
+    }
+    if !images.is_empty() {
+        body.insert(
+            "images".to_string(),
+            Value::Array(images.into_iter().map(Value::from).collect()),
+        );
+    }
+
+    let extras = parse_params(&params)?;
+    let body = merge_object(body, extras, reserved_video_keys())?;
+    let response = client.create_video(&body).await?;
 
     if !wait {
         println!("{}", serde_json::to_string_pretty(&response)?);

@@ -1,6 +1,7 @@
 mod client;
 mod commands;
 mod config;
+mod request_params;
 mod types;
 
 use anyhow::Result;
@@ -45,11 +46,20 @@ struct ModelsCommand {
 #[derive(Subcommand)]
 enum ModelsSubcommand {
     List(ModelsListArgs),
+    Show(ModelsShowArgs),
 }
 
 #[derive(Args)]
 struct ModelsListArgs {
     #[arg(long)]
+    json: bool,
+}
+
+#[derive(Args)]
+struct ModelsShowArgs {
+    #[arg(long)]
+    model: String,
+    #[arg(long, default_value_t = false)]
     json: bool,
 }
 
@@ -96,6 +106,14 @@ struct GenerateImageArgs {
     prompt: String,
     #[arg(long)]
     aspect_ratio: Option<String>,
+    #[arg(long)]
+    response_format: Option<String>,
+    #[arg(long = "image")]
+    images: Vec<String>,
+    #[arg(long)]
+    metadata_json: Option<String>,
+    #[arg(long = "param", value_name = "KEY=VALUE")]
+    params: Vec<String>,
     #[arg(long, default_value_t = false)]
     wait: bool,
     #[arg(long, default_value_t = 5)]
@@ -112,6 +130,10 @@ struct GenerateVideoArgs {
     aspect_ratio: Option<String>,
     #[arg(long)]
     duration: Option<u64>,
+    #[arg(long = "image")]
+    images: Vec<String>,
+    #[arg(long = "param", value_name = "KEY=VALUE")]
+    params: Vec<String>,
     #[arg(long, default_value_t = false)]
     wait: bool,
     #[arg(long, default_value_t = 8)]
@@ -154,6 +176,7 @@ async fn main() -> Result<()> {
         },
         Command::Models(command) => match command.command {
             ModelsSubcommand::List(args) => commands::models::list(args.json).await,
+            ModelsSubcommand::Show(args) => commands::models::show(args.model, args.json).await,
         },
         Command::Image(command) => match command.command {
             ImageSubcommand::Generate(args) => {
@@ -161,6 +184,10 @@ async fn main() -> Result<()> {
                     args.model,
                     args.prompt,
                     args.aspect_ratio,
+                    args.response_format,
+                    args.images,
+                    args.metadata_json,
+                    args.params,
                     args.wait,
                     args.poll_interval,
                 )
@@ -177,6 +204,8 @@ async fn main() -> Result<()> {
                     args.prompt,
                     args.aspect_ratio,
                     args.duration,
+                    args.images,
+                    args.params,
                     args.wait,
                     args.poll_interval,
                 )

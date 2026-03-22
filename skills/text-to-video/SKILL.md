@@ -37,8 +37,11 @@ ai-media video generate \
   --prompt "<scene>, <camera movement>, <mood>" \
   --aspect-ratio 16:9 \
   --duration 4 \
+  --param enhance_prompt=true \
   --wait
 ```
+
+如果模型是图生视频，就把参考图放进 `--param images='["https://..."]'`。
 
 ## Core Commands
 

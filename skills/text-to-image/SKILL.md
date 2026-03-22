@@ -36,10 +36,12 @@ ai-media image generate \
   --model <MODEL> \
   --prompt "<subject>, <style>, <lighting>" \
   --aspect-ratio 1:1 \
+  --param size=1024x1024 \
   --wait
 ```
 
 如果要做横幅图，就把 `--aspect-ratio` 改成 `16:9`。
+如果当前模型要求别的图片参数，用 `--param KEY=VALUE` 补上。
 
 ## Core Commands
 
