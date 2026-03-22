@@ -1,6 +1,9 @@
 ---
 name: ai-media-cli
 description: Use when someone wants to install, configure, onboard, or automate the ai-media CLI against ricebowl.ai, sora2.cloud, or a compatible local API. Covers install paths, credits recharge flow, API key setup, command parameters, common workflows, and script-friendly usage.
+license: MIT
+metadata:
+  version: 0.1.0
 ---
 
 # ai-media CLI

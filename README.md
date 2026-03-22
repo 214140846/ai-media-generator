@@ -16,6 +16,24 @@
 - <a href="https://ricebowl.ai">ricebowl.ai</a>
 - <a href="https://sora2.cloud">sora2.cloud</a>
 
+## Install As A Skill
+
+这个仓库里的 `ai-media-cli` 也可以直接被 `skills` CLI 识别，已经验证过下面两种装法都能成功列出 skill：
+
+```bash
+npx skills add https://github.com/214140846/ai-media-generator --skill ai-media-cli
+```
+
+或者直接装 skill 子目录：
+
+```bash
+npx skills add https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli
+```
+
+GitHub README 里的 `skills.sh` Markdown 卡片：
+
+[![skills.sh card](https://skills.sh/214140846/ai-media-generator/ai-media-cli/opengraph-image)](https://github.com/214140846/ai-media-generator/tree/main/skills/ai-media-cli)
+
 对外安装身份：
 
 - crate: `ai-media-generator`
