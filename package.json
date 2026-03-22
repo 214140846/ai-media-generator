@@ -1,0 +1,14 @@
+{
+  "name": "ai-media-generator",
+  "private": true,
+  "scripts": {
+    "cli:build:release": "pnpm tsx scripts/cli/build-ai-media-release.ts",
+    "cli:publish:npm": "pnpm tsx scripts/cli/publish-ai-media-npm.ts",
+    "cli:publish:pypi": "bash scripts/cli/publish-ai-media-pypi.sh",
+    "cli:test:npm": "node --test packages/ai-media/scripts/lib/platform.test.js",
+    "cli:test:pypi": "PYTHONPATH=packages/ai-media-py/src python3 -m unittest discover -s packages/ai-media-py/tests -p 'test_*.py'"
+  },
+  "devDependencies": {
+    "tsx": "^4.20.3"
+  }
+}

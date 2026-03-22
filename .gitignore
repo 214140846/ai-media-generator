@@ -1,0 +1,7 @@
+node_modules/
+.tmp/
+cli/genmedia/target/
+packages/ai-media-py/dist/
+__pycache__/
+*.pyc
+.DS_Store

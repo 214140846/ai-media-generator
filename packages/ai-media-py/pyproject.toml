@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ai-media-generator"
+version = "0.1.0"
+description = "Thin PyPI wrapper for the ai-media Rust CLI"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "thor" }]
+requires-python = ">=3.9"
+keywords = ["ai", "cli", "image-generation", "video-generation"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Environment :: Console"
+]
+
+[project.urls]
+Homepage = "https://ricebowl.ai"
+Repository = "https://github.com/214140846/ai-media-generator"
+
+[project.scripts]
+ai-media = "ai_media_cli.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ai_media_cli"]
